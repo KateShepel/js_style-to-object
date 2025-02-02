@@ -10,25 +10,26 @@ function convertToObject(sourceString) {
     return {};
   }
 
-  const result = {};
   const splitString = sourceString.split(';');
-  let property = '';
-  let value = '';
 
-  for (let i = 0; i < splitString.length; i++) {
-    const splitRule = splitString[i].split(':');
+  const convertString = splitString.reduce((previous, elem) => {
+    let property = '';
+    let value = '';
+    const splitRule = elem.split(':');
 
     if (splitRule.length < 2) {
-      continue;
+      return previous;
     }
 
     property = splitRule[0].trim();
     value = splitRule[1].trim();
 
-    result[property] = value;
-  }
+    previous[property] = value;
 
-  return result;
+    return previous;
+  }, {});
+
+  return convertString;
 }
 
 module.exports = convertToObject;
